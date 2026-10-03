@@ -1,0 +1,13 @@
+# Only the website files are tracked. Everything else in this folder
+# (original job photos with GPS data, Word docs, unused images) stays private.
+/*
+!/.gitignore
+!/index.html
+!/favicon-32.png
+!/apple-touch-icon.png
+!/logo-mark.png
+!/filler.webp
+!/peopleoverprofit_cert.png
+!/images/
+!/gallery/
+.DS_Store

@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cowboy Mechanics | 24/7 Mobile Auto Repair in Las Vegas, NV</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              bg: '#141312',
+              surface: '#1c1a18',
+              surfaceAlt: '#23211f',
+              border: '#2e2b28',
+              btn: '#9aa8b6',
+              btnHover: '#8696a6',
+              accent: '#d97706',
+              emergency: '#ef4444'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #23211f;
+      color: #eae7e4;
+      font-family: 'Inter', sans-serif;
+    }
+    .custom-underline {
+      display: inline-block;
+      position: relative;
+    }
+    .custom-underline::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 40px;
+      height: 3px;
+      background-color: #eae7e4;
+    }
+    .view-section {
+      display: none;
+    }
+    .view-section.active {
+      display: block;
+      animation: fadeIn 0.25s ease-out forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .corner-circle {
+      position: absolute;
+      top: -30px;
+      right: -30px;
+      width: 90px;
+      height: 90px;
+      border-radius: 9999px;
+      background-color: rgba(255, 255, 255, 0.035);
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body class="bg-[#211f1d] text-[#d6d3ce] min-h-screen flex flex-col selection:bg-brand-btn selection:text-black">
+
+  <header class="sticky top-0 z-50 bg-[#211f1d] border-b border-[#302c29] py-4">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a href="#home" onclick="switchView('home')" class="flex items-center gap-3 group">
+        <img src="logo-mark.png" alt="" class="h-11 w-auto">
+        <div>
+          <span class="font-black text-base tracking-wider text-white uppercase block leading-none">
+            COWBOY MECHANICS
+          </span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="hidden md:flex items-center space-x-8 text-xs font-bold uppercase tracking-wider text-[#b3ada6]">
+        <button onclick="switchView('services')" id="nav-services" class="nav-item hover:text-white transition">Services</button>
+        <button onclick="switchView('gallery')" id="nav-gallery" class="nav-item hover:text-white transition">Gallery</button>
+        <button onclick="switchView('about-contact')" id="nav-about-contact" class="nav-item hover:text-white transition">Contact</button>
+        <button onclick="switchView('about-contact'); scrollToEstimate();" class="px-5 py-2.5 bg-[#a4b3c2] hover:bg-[#92a2b2] text-[#141312] text-xs font-bold uppercase tracking-wider transition rounded-sm">
+          Get An Estimate
+        </button>
+      </nav>
+
+      <!-- Mobile Menu Button -->
+      <button id="mobileToggle" class="md:hidden p-2 text-neutral-400 hover:text-white" aria-label="Toggle Menu">
+        <i data-lucide="menu" class="w-6 h-6"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown Navigation -->
+    <div id="mobileDrawer" class="hidden md:hidden bg-[#181615] border-b border-[#302c29] px-5 py-4 space-y-3">
+      <button onclick="switchView('services'); toggleMobile();" class="block w-full text-left py-2 text-sm font-semibold uppercase tracking-wider text-neutral-300">Services</button>
+      <button onclick="switchView('gallery'); toggleMobile();" class="block w-full text-left py-2 text-sm font-semibold uppercase tracking-wider text-neutral-300">Gallery</button>
+      <button onclick="switchView('about-contact'); toggleMobile();" class="block w-full text-left py-2 text-sm font-semibold uppercase tracking-wider text-neutral-300">Contact</button>
+      <div class="pt-3 border-t border-[#302c29] flex flex-col gap-3">
+        <a href="tel:7022411227" class="py-3 text-center text-xs font-bold uppercase tracking-wider rounded border border-[#302c29] text-white">
+          Call Russell: (702) 241-1227
+        </a>
+        <button onclick="switchView('about-contact'); scrollToEstimate(); toggleMobile();" class="py-3 bg-[#a4b3c2] text-[#141312] font-extrabold text-xs uppercase tracking-wider rounded text-center">
+          Get An Estimate
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-grow">
+
+    <!-- ======================================================== -->
+    <!-- VIEW 1: HOME PAGE                                        -->
+    <!-- ======================================================== -->
+    <section id="view-home" class="view-section active">
+      
+      <!-- HERO SECTION -->
+      <div class="relative bg-[#141312] min-h-[450px] sm:min-h-[550px] flex items-center overflow-hidden border-b border-[#302c29]">
+        
+        <!-- Background Image with gradient overlay -->
+        <div class="absolute inset-0 z-0 bg-[#141312]">
+          <img id="heroBgImage"
+               src="filler.webp" 
+               alt="Cowboy Mechanics Background"
+               class="w-full h-full object-cover object-center filter grayscale-[20%] contrast-125 opacity-70 mix-blend-luminosity transition-opacity duration-300"
+               onerror="tryNextHeroImage(this);"/>
+          <div class="absolute inset-0 bg-gradient-to-r from-[#141312] via-[#141312]/85 to-transparent"></div>
+        </div>
+
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10 w-full">
+          <div class="max-w-2xl space-y-5">
+            
+            <!-- Location Badge Pill -->
+            <div class="inline-flex items-center px-3 py-1.5 border border-[#383532] bg-[#1c1a18]/80 backdrop-blur-sm text-[#b3ada6] text-xs font-bold uppercase tracking-widest mb-2">
+              LAS VEGAS, NV - LICENSED & LOCAL
+            </div>
+
+            <!-- Scaled Up Typography & New Headline -->
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight uppercase leading-[1.05]">
+              PEOPLE OVER<br>
+              <span class="text-[#a4b3c2]">PROFIT.</span>
+            </h1>
+
+            <!-- Copy -->
+            <p class="text-sm sm:text-base text-[#b8b3ac] font-normal leading-relaxed mt-4">
+              The automotive repair industry in Las Vegas has become increasingly focused on numbers: higher repair bills, aggressive up selling, and maximizing every customer ticket. Somewhere along the way, taking care of the customer can get lost. And that is truthfully what we strive for.
+            </p>
+
+            <!-- Dual Action Buttons -->
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-5">
+              <button onclick="switchView('about-contact'); scrollToEstimate();" class="px-6 py-3.5 bg-[#a4b3c2] hover:bg-[#92a2b2] text-[#141312] font-black text-xs uppercase tracking-widest flex items-center justify-center gap-2 transition rounded-sm">
+                <span>GET A FREE ESTIMATE</span>
+                <i data-lucide="chevron-right" class="w-4 h-4 stroke-[3]"></i>
+              </button>
+
+              <a href="tel:7022411227" class="px-6 py-3.5 border border-[#383532] bg-[#1c1a18]/80 backdrop-blur-sm hover:bg-white/10 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition rounded-sm">
+                <i data-lucide="phone" class="w-4 h-4 text-[#a4b3c2]"></i>
+                <span>(702) 241-1227</span>
+              </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ORIGINAL "PEOPLE OVER PROFIT" CERTIFICATE SECTION -->
+      <section class="py-12 sm:py-16 bg-[#181615] border-b border-[#302c29]">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div class="inline-block w-full max-w-2xl bg-[#0f141c] border border-[#383532] rounded-md shadow-2xl overflow-hidden p-1 sm:p-2">
+            <!-- 1. Attempts to load your original Certificate.jpg first -->
+            <img id="certImageElement"
+                 src="peopleoverprofit_cert.png" 
+                 alt="People Over Profit - The Cowboy Mechanics Certificate" 
+                 class="w-full h-auto max-h-[920px] object-contain rounded hidden"
+                 onload="this.classList.remove('hidden'); document.getElementById('certOriginalFallback').classList.add('hidden');"
+                 onerror="tryNextCertImage(this);"/>
+
+            <!-- 2. Authentic High-Fidelity Rendering Matching Your Original Certificate Exactly -->
+            <div id="certOriginalFallback" class="relative bg-[#eddcc2] text-[#2c221e] rounded-sm shadow-xl overflow-hidden text-center select-none border-4 border-[#bca88a] p-6 sm:p-10" style="background-image: radial-gradient(#f7ebd7 15%, #eddcc2 85%);">
+              
+              <!-- Vintage Double Line Ornamental Border -->
+              <div class="absolute inset-2 border-2 border-[#8c7456]/40 pointer-events-none rounded-none"></div>
+              <div class="absolute inset-3.5 border border-[#8c7456]/30 pointer-events-none"></div>
+
+              <!-- Top Left Corner Flourish (SVG) -->
+              <svg class="absolute top-4 left-4 w-10 h-10 text-[#7a6448] opacity-75 pointer-events-none" viewBox="0 0 50 50" fill="currentColor">
+                <path d="M0,0 L20,0 C15,5 10,12 8,20 C6,10 0,0 0,0 Z M5,5 C10,12 12,25 6,35 C3,22 1,12 5,5 Z M0,20 C5,15 12,10 20,8 C10,6 0,0 0,0 Z"></path>
+                <circle cx="16" cy="16" r="3"></circle>
+              </svg>
+
+              <!-- Top Right Corner Flourish (SVG) -->
+              <svg class="absolute top-4 right-4 w-10 h-10 text-[#7a6448] opacity-75 pointer-events-none -scale-x-100" viewBox="0 0 50 50" fill="currentColor">
+                <path d="M0,0 L20,0 C15,5 10,12 8,20 C6,10 0,0 0,0 Z M5,5 C10,12 12,25 6,35 C3,22 1,12 5,5 Z M0,20 C5,15 12,10 20,8 C10,6 0,0 0,0 Z"></path>
+                <circle cx="16" cy="16" r="3"></circle>
+              </svg>
+
+              <!-- Bottom Left Corner Flourish (SVG) -->
+              <svg class="absolute bottom-4 left-4 w-10 h-10 text-[#7a6448] opacity-75 pointer-events-none -scale-y-100" viewBox="0 0 50 50" fill="currentColor">
+                <path d="M0,0 L20,0 C15,5 10,12 8,20 C6,10 0,0 0,0 Z M5,5 C10,12 12,25 6,35 C3,22 1,12 5,5 Z M0,20 C5,15 12,10 20,8 C10,6 0,0 0,0 Z"></path>
+                <circle cx="16" cy="16" r="3"></circle>
+              </svg>
+
+              <!-- Bottom Right Corner Flourish (SVG) -->
+              <svg class="absolute bottom-4 right-4 w-10 h-10 text-[#7a6448] opacity-75 pointer-events-none -scale-x-100 -scale-y-100" viewBox="0 0 50 50" fill="currentColor">
+                <path d="M0,0 L20,0 C15,5 10,12 8,20 C6,10 0,0 0,0 Z M5,5 C10,12 12,25 6,35 C3,22 1,12 5,5 Z M0,20 C5,15 12,10 20,8 C10,6 0,0 0,0 Z"></path>
+                <circle cx="16" cy="16" r="3"></circle>
+              </svg>
+
+              <div class="relative z-10 max-w-xl mx-auto py-2">
+                <!-- Original Gothic Title -->
+                <h3 class="text-3xl sm:text-5xl font-black text-[#261c16] tracking-wide mb-1" style="font-family: 'Playfair Display', 'Cinzel', Georgia, serif; font-variant: small-caps;">
+                  People Over Profit
+                </h3>
+                
+                <!-- Subtitle -->
+                <p class="text-[11px] sm:text-xs font-bold uppercase tracking-[0.25em] text-[#6b563e] mb-6">
+                  OUR WORD TO YOU:
+                </p>
+
+                <!-- 5 Promises in Clean Parchment Typography -->
+                <div class="space-y-4 sm:space-y-5 text-center text-[#2a1e17] px-2 sm:px-6">
+                  <!-- Promise 1 -->
+                  <div>
+                    <h4 class="text-xs sm:text-sm font-black uppercase tracking-wide">WE WON'T SELL YOU A REPAIR YOU DON'T NEED.</h4>
+                    <p class="text-xs sm:text-[13px] italic text-[#594534] mt-0.5">If it doesn't need fixing, we won't tell you it does.</p>
+                  </div>
+
+                  <!-- Promise 2 -->
+                  <div>
+                    <h4 class="text-xs sm:text-sm font-black uppercase tracking-wide">WE WON'T USE FEAR TO MAKE A SALE.</h4>
+                    <p class="text-xs sm:text-[13px] italic text-[#594534] mt-0.5">We'll explain what's wrong, what can wait, and what your options are.</p>
+                  </div>
+
+                  <!-- Promise 3 -->
+                  <div>
+                    <h4 class="text-xs sm:text-sm font-black uppercase tracking-wide">NO SURPRISE BILLS.</h4>
+                    <p class="text-xs sm:text-[13px] italic text-[#594534] mt-0.5">If the price or scope changes, you'll know before we continue.</p>
+                  </div>
+
+                  <!-- Promise 4 -->
+                  <div>
+                    <h4 class="text-xs sm:text-sm font-black uppercase tracking-wide">WE'LL TELL YOU THE TRUTH, EVEN WHEN IT COSTS US MONEY.</h4>
+                    <p class="text-xs sm:text-[13px] italic text-[#594534] mt-0.5">If we don't know, we'll say so. If you don't need it, we'll say that too.</p>
+                  </div>
+
+                  <!-- Promise 5 -->
+                  <div>
+                    <h4 class="text-xs sm:text-sm font-black uppercase tracking-wide">THE FINAL DECISION IS ALWAYS YOURS.</h4>
+                    <p class="text-xs sm:text-[13px] italic text-[#594534] mt-0.5">We'll give you the information. You decide what happens next.</p>
+                  </div>
+                </div>
+
+                <!-- Footer Tagline -->
+                <p class="text-xs sm:text-sm font-bold uppercase tracking-wider text-[#3d2e23] mt-7 mb-4">
+                  THAT'S WHAT PEOPLE OVER PROFIT MEANS TO US
+                </p>
+
+                <!-- Russell Doering Signature Block -->
+                <div class="inline-block text-center mt-2">
+                  <div class="text-3xl sm:text-4xl text-[#261c16] font-bold italic select-none" style="font-family: 'Brush Script MT', 'Great Vibes', cursive, serif;">
+                    Russell Doering
+                  </div>
+                  <div class="w-56 h-[1.5px] bg-[#634e38] mx-auto my-1"></div>
+                  <span class="text-[10px] font-black uppercase tracking-widest text-[#2c2017] block">RUSSELL DOERING</span>
+                  <span class="text-[9px] font-bold uppercase tracking-wider text-[#634e38] block">COWBOY MECHANICS</span>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- REVIEWS SECTION -->
+      <section class="py-12 bg-[#211f1d] border-b border-[#302c29]">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
+            <div>
+              <div class="flex items-center gap-1.5 mb-2 text-[#d97706]">
+                  <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                  <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                  <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                  <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                  <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+              </div>
+              <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight uppercase">
+                5.0 Star Rated in Vegas
+              </h2>
+            </div>
+            <a href="https://share.google/FkPs9NUBxXabEonCF" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#a4b3c2] hover:text-white transition">
+                <span>View All Google Reviews</span>
+                <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+            </a>
+          </div>
+
+          <div class="grid md:grid-cols-3 gap-6">
+            <!-- Review 1 -->
+            <div class="bg-[#262422] p-6 border border-[#302c29] rounded-sm">
+                <p class="text-sm text-white mb-4 leading-relaxed italic">"Russell is amazing! He came out same day when my car wouldn't start. Was honest about it just being a battery issue and didn't try to upsell me. Fair pricing and genuinely a good guy."</p>
+                <div class="text-xs uppercase tracking-wider font-bold text-[#8a8580]">Sarah J.</div>
+            </div>
+            <!-- Review 2 -->
+            <div class="bg-[#262422] p-6 border border-[#302c29] rounded-sm">
+                <p class="text-sm text-white mb-4 leading-relaxed italic">"Hard to find an honest mechanic in Vegas but I finally found one. Cowboy Mechanics gave me a quote upfront for my brakes, showed up right on time, and the price was exactly what they said."</p>
+                <div class="text-xs uppercase tracking-wider font-bold text-[#8a8580]">Mike T.</div>
+            </div>
+            <!-- Review 3 -->
+            <div class="bg-[#262422] p-6 border border-[#302c29] rounded-sm">
+                <p class="text-sm text-white mb-4 leading-relaxed italic">"My AC went out during a heatwave. Russell fit me into his schedule, diagnosed the leak quickly, and had it blowing ice cold again without charging an arm and a leg. True professional."</p>
+                <div class="text-xs uppercase tracking-wider font-bold text-[#8a8580]">David R.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CURRENT SPECIALS SECTION -->
+      <section class="py-16 bg-[#262422] border-b border-[#302c29]">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div class="mb-8">
+            <span class="text-xs uppercase tracking-widest text-[#8a8580] font-bold block mb-2">LIMITED-TIME DEALS</span>
+            <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight uppercase">CURRENT SPECIALS</h2>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <!-- Special Card 1 -->
+            <div class="relative bg-transparent border border-[#383532] rounded-sm p-8 flex flex-col justify-between overflow-hidden">
+              <div class="corner-circle"></div>
+              <div>
+                <div class="flex items-center gap-2 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[#9aa8b6] mb-4">
+                  <div class="w-6 h-6 rounded border border-neutral-700 bg-[#2b2825] flex items-center justify-center text-[#9aa8b6]">
+                    <i data-lucide="leaf" class="w-3 h-3"></i>
+                  </div>
+                  <span>SEASONAL DEAL</span>
+                </div>
+                <h3 class="text-lg sm:text-xl font-black text-white tracking-tight uppercase mb-2">
+                  MOBILE DIAGNOSTICS
+                </h3>
+                <p class="text-[#b3ada6] text-sm leading-relaxed mb-6">
+                  Car won't crank or check engine light flashing? We arrive at your location with computer diagnostic scanners and electrical load analyzers.
+                </p>
+              </div>
+              <div class="border-t border-[#383532] pt-5 flex items-center justify-between">
+                <div>
+                  <span class="text-[10px] sm:text-xs uppercase tracking-widest text-[#8a8580] block font-bold mb-1">STARTING AT</span>
+                  <span class="text-2xl font-black text-white">$129.99</span>
+                </div>
+                <button onclick="prefillBooking('Diagnostics')" class="px-5 py-2.5 bg-[#a4b3c2] hover:bg-[#92a2b2] text-[#141312] font-black text-[10px] sm:text-xs uppercase tracking-widest rounded-sm transition">
+                  BOOK NOW
+                </button>
+              </div>
+            </div>
+
+            <!-- Special Card 2 -->
+            <div class="relative bg-transparent border border-[#383532] rounded-sm p-8 flex flex-col justify-between overflow-hidden">
+              <div class="corner-circle"></div>
+              <div>
+                <div class="flex items-center gap-2 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[#9aa8b6] mb-4">
+                  <div class="w-6 h-6 rounded border border-neutral-700 bg-[#2b2825] flex items-center justify-center text-[#9aa8b6]">
+                    <i data-lucide="zap" class="w-3 h-3"></i>
+                  </div>
+                  <span>QUICK & EASY</span>
+                </div>
+                <h3 class="text-lg sm:text-xl font-black text-white tracking-tight uppercase mb-2">
+                  DRIVEWAY BRAKES
+                </h3>
+                <p class="text-[#b3ada6] text-sm leading-relaxed mb-6">
+                  Squeaking, grinding, or soft pedal? We bring high-grade ceramic brake pads and rotor replacement options right to your driveway.
+                </p>
+              </div>
+              <div class="border-t border-[#383532] pt-5 flex items-center justify-between">
+                <div>
+                  <span class="text-[10px] sm:text-xs uppercase tracking-widest text-[#8a8580] block font-bold mb-1">FLAT RATE</span>
+                  <span class="text-2xl font-black text-white">$224.99</span>
+                </div>
+                <button onclick="prefillBooking('Brakes')" class="px-5 py-2.5 border border-[#4a4642] hover:border-neutral-500 text-white font-black text-[10px] sm:text-xs uppercase tracking-widest rounded-sm transition">
+                  BOOK NOW
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- WHY US & SERVICE AREA SECTION -->
+      <section class="py-16 bg-[#211f1d] border-b border-[#302c29]">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="grid md:grid-cols-2 gap-10 lg:gap-16">
+            
+            <!-- WHY US -->
+            <div>
+              <span class="text-xs uppercase tracking-widest text-[#8a8580] font-bold block mb-2">WHY US</span>
+              <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight uppercase mb-6">
+                WHY COWBOY MECHANICS?
+              </h2>
+              <div class="space-y-4">
+                <div class="flex items-center gap-3">
+                  <div class="w-5 h-5 rounded-full border border-neutral-500 flex items-center justify-center shrink-0 text-[#b3ada6]">
+                    <i data-lucide="check" class="w-3 h-3"></i>
+                  </div>
+                  <p class="text-sm text-[#b3ada6]">Honest diagnostics, straightforward recommendations.</p>
+                </div>
+                <div class="flex items-center gap-3">
+                  <div class="w-5 h-5 rounded-full border border-neutral-500 flex items-center justify-center shrink-0 text-[#b3ada6]">
+                    <i data-lucide="check" class="w-3 h-3"></i>
+                  </div>
+                  <p class="text-sm text-[#b3ada6]">Never selling you something your vehicle doesn't actually need.</p>
+                </div>
+                <div class="flex items-center gap-3">
+                  <div class="w-5 h-5 rounded-full border border-neutral-500 flex items-center justify-center shrink-0 text-[#b3ada6]">
+                    <i data-lucide="check" class="w-3 h-3"></i>
+                  </div>
+                  <p class="text-sm text-[#b3ada6]">We show up on time and clean up when we're done.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- SERVICE AREA -->
+            <div>
+              <span class="text-xs uppercase tracking-widest text-[#8a8580] font-bold block mb-2">COVERAGE</span>
+              <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight uppercase mb-6">
+                SERVICE AREA
+              </h2>
+              <div class="grid grid-cols-2 gap-y-4 gap-x-6 mb-6 text-sm font-bold text-white">
+                <div class="flex items-center gap-2.5"><i data-lucide="map-pin" class="w-4 h-4 text-[#8a8580]"></i><span>Las Vegas</span></div>
+                <div class="flex items-center gap-2.5"><i data-lucide="map-pin" class="w-4 h-4 text-[#8a8580]"></i><span>Henderson</span></div>
+                <div class="flex items-center gap-2.5"><i data-lucide="map-pin" class="w-4 h-4 text-[#8a8580]"></i><span>Summerlin</span></div>
+                <div class="flex items-center gap-2.5"><i data-lucide="map-pin" class="w-4 h-4 text-[#8a8580]"></i><span>North Las Vegas</span></div>
+                <div class="flex items-center gap-2.5"><i data-lucide="map-pin" class="w-4 h-4 text-[#8a8580]"></i><span>Enterprise</span></div>
+                <div class="flex items-center gap-2.5"><i data-lucide="map-pin" class="w-4 h-4 text-[#8a8580]"></i><span>Spring Valley</span></div>
+              </div>
+              <p class="text-xs text-[#8a8580] leading-relaxed">
+                Not sure if we cover your area? Give us a call and we'll let you know.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- GET AN ESTIMATE FORM -->
+      <section id="estimate-section" class="py-16 bg-[#262422]">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="grid lg:grid-cols-12 gap-10 items-start">
+            
+            <!-- Left Info Column -->
+            <div class="lg:col-span-4 space-y-6 pr-4">
+              <div>
+                <span class="text-xs uppercase tracking-widest text-[#8a8580] font-bold block mb-2">FREE ESTIMATES</span>
+                <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight uppercase mb-3">
+                  GET AN ESTIMATE
+                </h2>
+                <p class="text-sm text-[#b3ada6] leading-relaxed">
+                  Describe your project. We'll get back to you with a free, no-obligation estimate.
+                </p>
+              </div>
+
+              <div class="space-y-5">
+                  <!-- Phone -->
+                  <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-sm border border-[#383532] bg-transparent flex items-center justify-center text-[#9aa8b6]">
+                      <i data-lucide="phone" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <span class="text-[10px] uppercase font-bold tracking-widest text-[#8a8580] block mb-1">CALL RUSSELL</span>
+                      <span class="text-base font-bold text-white tracking-tight block">(702) 241-1227</span>
+                    </div>
+                  </div>
+                  <!-- Email -->
+                  <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-sm border border-[#383532] bg-transparent flex items-center justify-center text-[#9aa8b6]">
+                      <i data-lucide="mail" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <span class="text-[10px] uppercase font-bold tracking-widest text-[#8a8580] block mb-1">EMAIL</span>
+                      <span class="text-sm font-medium text-[#b3ada6] tracking-tight block">admincowboymechanics@gmail.com</span>
+                    </div>
+                  </div>
+              </div>
+            </div>
+
+            <!-- Right Box Form -->
+            <div class="lg:col-span-8 border border-[#383532] bg-transparent p-6 sm:p-8 rounded-sm">
+              <form id="estimateForm" onsubmit="handleEstimateSubmit(event)" class="space-y-6">
+                <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" class="hidden">
+              
+              <div class="grid sm:grid-cols-2 gap-5">
+                <div>
+                  <label class="block text-[10px] font-bold uppercase tracking-widest text-[#8a8580] mb-2">First Name (required)</label>
+                  <input type="text" id="estFirstName" required class="w-full px-4 py-3 bg-transparent border border-[#383532] text-white text-sm focus:outline-none focus:border-neutral-500 rounded-sm">
+                </div>
+                <div>
+                  <label class="block text-[10px] font-bold uppercase tracking-widest text-[#8a8580] mb-2">Last Name</label>
+                  <input type="text" id="estLastName" class="w-full px-4 py-3 bg-transparent border border-[#383532] text-white text-sm focus:outline-none focus:border-neutral-500 rounded-sm">
+                </div>
+              </div>
+
+              <div class="grid sm:grid-cols-2 gap-5">
+                <div>
+                  <label class="block text-[10px] font-bold uppercase tracking-widest text-[#8a8580] mb-2">Email</label>
+                  <input type="email" id="estEmail" class="w-full px-4 py-3 bg-transparent border border-[#383532] text-white text-sm focus:outline-none focus:border-neutral-500 rounded-sm">
+                </div>
+                <div>
+                  <label class="block text-[10px] font-bold uppercase tracking-widest text-[#8a8580] mb-2">Phone (required)</label>
+                  <input type="tel" id="estPhone" required placeholder="Your phone number" class="w-full px-4 py-3 bg-transparent border border-[#383532] text-white text-sm focus:outline-none focus:border-neutral-500 rounded-sm placeholder:text-[#6a6560]">
+                </div>
+              </div>
+
+              <div>
+                <label for="estAddress" class="block text-[10px] font-bold uppercase tracking-widest text-[#8a8580] mb-2">Service Address</label>
+                <input type="text" id="estAddress" autocomplete="street-address" placeholder="Where is the vehicle? Street, city, ZIP" class="w-full px-4 py-3 bg-transparent border border-[#383532] text-white text-sm focus:outline-none focus:border-neutral-500 rounded-sm placeholder:text-[#6a6560]">
+              </div>
+
+              <div>
+                <label for="estCategory" class="block text-[10px] font-bold uppercase tracking-widest text-[#8a8580] mb-2">What do you need help with? (required)</label>
+                <div class="relative">
+                  <select id="estCategory" required class="w-full px-4 py-3 pr-10 bg-transparent border border-[#383532] text-white text-sm focus:outline-none focus:border-neutral-500 rounded-sm appearance-none cursor-pointer">
+                    <option value="" disabled selected class="bg-[#262422]">Choose a category</option>
+                    <option value="Diagnostics" class="bg-[#262422]">Diagnostics</option>
+                    <option value="Engine Repair" class="bg-[#262422]">Engine Repair</option>
+                    <option value="Cooling & A/C" class="bg-[#262422]">Cooling &amp; A/C</option>
+                    <option value="Starting & Electrical" class="bg-[#262422]">Starting &amp; Electrical</option>
+                    <option value="Brakes" class="bg-[#262422]">Brakes</option>
+                    <option value="Suspension" class="bg-[#262422]">Suspension</option>
+                    <option value="Maintenance" class="bg-[#262422]">Maintenance</option>
+                    <option value="Other / Not sure" class="bg-[#262422]">Other / Not sure</option>
+                  </select>
+                  <i data-lucide="chevron-down" class="w-4 h-4 text-[#8a8580] absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+                </div>
+              </div>
+
+              <label for="estEmergency" class="flex items-start gap-3 p-4 border border-[#383532] hover:border-neutral-500 rounded-sm cursor-pointer transition">
+                <input type="checkbox" id="estEmergency" class="accent-[#ef4444] w-4 h-4 mt-0.5 shrink-0">
+                <span>
+                  <span class="text-xs font-bold text-white uppercase tracking-wider block">This is an emergency</span>
+                  <span class="text-xs text-[#8a8580] block mt-1">Won't start, unsafe to drive, or you're stranded. For the fastest help, also call Russell at <a href="tel:7022411227" class="underline hover:text-white">(702) 241-1227</a>.</span>
+                </span>
+              </label>
+
+              <div>
+                <label for="estStartDate" class="block text-[10px] font-bold uppercase tracking-widest text-[#8a8580] mb-2">
+                  Preferred Date <span class="text-neutral-500 normal-case tracking-normal">(optional, leave blank if you're flexible)</span>
+                </label>
+                <input type="date" id="estStartDate" style="color-scheme: dark" class="w-full px-4 py-3 bg-transparent border border-[#383532] text-white text-sm focus:outline-none focus:border-neutral-500 rounded-sm">
+              </div>
+
+              <div>
+                <label for="estDetails" class="block text-[10px] font-bold uppercase tracking-widest text-[#8a8580] mb-2">Details</label>
+                <textarea id="estDetails" rows="4" placeholder="Year, make and model, what's going on, any warning lights or noises" class="w-full px-4 py-3 bg-transparent border border-[#383532] text-white text-sm focus:outline-none focus:border-neutral-500 rounded-sm placeholder:text-[#6a6560]"></textarea>
+              </div>
+
+              <button type="submit" class="w-full py-4 bg-[#a4b3c2] hover:bg-[#92a2b2] text-[#141312] font-black text-xs uppercase tracking-widest transition rounded-sm mt-4">
+                Submit Request
+              </button>
+            </form>
+
+              <!-- In-page confirmation container -->
+              <div id="estimateSuccess" class="hidden mt-4 p-4 bg-[#1e2420] border border-emerald-800 text-neutral-200 text-sm rounded-sm">
+                <div class="flex items-center gap-3">
+                  <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400 shrink-0"></i>
+                  <div>
+                    <span class="font-bold text-white block">Estimate Request Sent!</span>
+                    <p id="estimateMessage" class="text-neutral-300 mt-1 text-xs"></p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- VIEW 2: SERVICES & PRICES PAGE -->
+    <!-- ======================================================== -->
+    <section id="view-services" class="view-section">
+      
+      <div class="pt-12 pb-14 bg-[#211f1d] border-b border-[#302c29]">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <button onclick="switchView('home')" class="inline-flex items-center gap-2 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[#8a8580] hover:text-white transition mb-6">
+            <i data-lucide="chevron-left" class="w-4 h-4"></i>
+            <span>Back to Home</span>
+          </button>
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight uppercase custom-underline mb-6">
+            Our Services
+          </h1>
+          <p class="text-sm sm:text-base text-[#9c968f] max-w-2xl mt-4 leading-relaxed">
+            Honest pricing. Professional execution. We handle the heavy lifting so you don't have to.
+          </p>
+        </div>
+      </div>
+
+      <section class="py-16 bg-[#262422] border-b border-[#302c29]">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <!-- Card 1 -->
+            <div class="bg-transparent border border-[#383532] rounded-sm p-6 sm:p-8 flex flex-col justify-between hover:border-neutral-500 transition">
+              <div>
+                <img src="images/service-basic.jpg" alt="Engine with ignition coils exposed" loading="lazy" class="w-full aspect-[16/10] object-cover rounded-sm border border-[#302c29] mb-5">
+                <h3 class="text-lg font-black text-white uppercase tracking-tight mb-3">Basic Service</h3>
+                <p class="text-[#9c968f] text-sm leading-relaxed mb-6">
+                  Computerized diagnostics, battery load testing, spark inspection, full synthetic oil change, filter swap, and multi-point visual safety check.
+                </p>
+                <div class="p-4 bg-[#1e1c1b] border border-[#302c29] rounded-none mb-6 text-xs text-[#a8a29e]">
+                  <strong class="text-white font-bold uppercase text-[10px] tracking-wider block mb-1">Note:</strong>
+                  Diagnostic fee is 100% credited toward completed repair work.
+                </div>
+              </div>
+              <div class="border-t border-[#383532] pt-5">
+                <span class="text-lg font-extrabold text-white block">Starting from $89</span>
+                <span class="text-xs text-[#7a7570] block mt-1">Transparent pricing</span>
+              </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="bg-transparent border border-[#383532] rounded-sm p-6 sm:p-8 flex flex-col justify-between hover:border-neutral-500 transition">
+              <div>
+                <img src="images/service-intermediate.jpg" alt="Front of a Sprinter engine with belts and pulleys" loading="lazy" class="w-full aspect-[16/10] object-cover rounded-sm border border-[#302c29] mb-5">
+                <h3 class="text-lg font-black text-white uppercase tracking-tight mb-3">Intermediate Service</h3>
+                <p class="text-[#9c968f] text-sm leading-relaxed mb-6">
+                  Mobile ceramic brake pad & rotor replacement, starter motor replacement, high-output alternator swaps, water pump fixes.
+                </p>
+                <div class="p-4 bg-[#1e1c1b] border border-[#302c29] rounded-none mb-6 text-xs text-[#a8a29e]">
+                  <strong class="text-white font-bold uppercase text-[10px] tracking-wider block mb-1">Note:</strong>
+                  Installed on-site. 12-month parts and labor warranty included.
+                </div>
+              </div>
+              <div class="border-t border-[#383532] pt-5">
+                <span class="text-lg font-extrabold text-white block">$500 – $1000 Range</span>
+                <span class="text-xs text-[#7a7570] block mt-1">Exact quote provided first</span>
+              </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="bg-transparent border border-[#383532] rounded-sm p-6 sm:p-8 flex flex-col justify-between hover:border-neutral-500 transition">
+              <div>
+                <img src="images/service-advanced.jpg" alt="Two CV axles side by side" loading="lazy" class="w-full aspect-[16/10] object-cover rounded-sm border border-[#302c29] mb-5">
+                <h3 class="text-lg font-black text-white uppercase tracking-tight mb-3">Advanced Service</h3>
+                <p class="text-[#9c968f] text-sm leading-relaxed mb-6">
+                  Comprehensive AC compressor overhaul, cooling radiator swaps, suspension & strut renewal, and complex electrical troubleshooting.
+                </p>
+                <div class="p-4 bg-[#1e1c1b] border border-[#302c29] rounded-none mb-6 text-xs text-[#a8a29e]">
+                  <strong class="text-white font-bold uppercase text-[10px] tracking-wider block mb-1">Note:</strong>
+                  No games, no inflated hours. Fair labor and OEM-grade parts.
+                </div>
+              </div>
+              <div class="border-t border-[#383532] pt-5">
+                <span class="text-lg font-extrabold text-white block">Budget &gt; $1000</span>
+                <span class="text-xs text-[#7a7570] block mt-1">Major repairs executed mobile</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FULL LIST OF REPAIRS & SERVICES -->
+      <section id="servicesFullList" class="py-16 bg-[#211f1d] border-b border-[#302c29]">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="mb-10">
+            <span class="text-xs uppercase tracking-widest text-[#8a8580] font-bold block mb-2">WHAT WE FIX</span>
+            <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight uppercase">Full List of Repairs &amp; Services</h2>
+            <p class="text-sm text-[#9c968f] mt-3 max-w-2xl leading-relaxed">All done mobile, right where your vehicle is parked.</p>
+          </div>
+
+          <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="border border-[#383532] rounded-sm p-6">
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-8 h-8 rounded-sm border border-[#383532] flex items-center justify-center text-[#9aa8b6]"><i data-lucide="scan-line" class="w-4 h-4"></i></div>
+                <h3 class="text-sm font-black text-white uppercase tracking-wider">Diagnostics</h3>
+              </div>
+              <ul class="space-y-2 text-sm text-[#b3ada6]">
+                <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0 text-[#8a8580]"></i>Check engine light diagnostics</li>
+                <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0 text-[#8a8580]"></i>No-start / no-crank diagnosis</li>
+                <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0 text-[#8a8580]"></i>Battery load testing</li>
+                <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0 text-[#8a8580]"></i>Electrical troubleshooting</li>
+                <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0 text-[#8a8580]"></i>Multi-point safety inspection</li>
+              </ul>
+            </div>
+
+            <div class="border border-[#383532] rounded-sm p-6">
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-8 h-8 rounded-sm border border-[#383532] flex items-center justify-center text-[#9aa8b6]"><i data-lucide="cog" class="w-4 h-4"></i></div>
+                <h3 class="text-sm font-black text-white uppercase tracking-wider">Engine Repair</h3>
+              </div>
+              <ul class="space-y-2 text-sm text-[#b3ada6]">
+                <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0 text-[#8a8580]"></i>Timing chain replacement</li>
+                <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0 text-[#8a8580]"></i>Head gasket replacement</li>
+                <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0 text-[#8a8580]"></i>Cylinder head removal &amp; install</li>
+                <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0 text-[#8a8580]"></i>Camshafts, lifters &amp; valve springs</li>
+                <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0 text-[#8a8580]"></i>Valve cover &amp; intake manifold gaskets</li>
+                <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0 text-[#8a8580]"></i>Fuel injectors</li>
+                <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0 text-[#8a8580]"></i>Spark plugs</li>
+                <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0 text-[#8a8580]"></i>Engine teardown &amp; internal repair</li>
+              </ul>
+            </div>
+
+            <div class="border border-[#383532] rounded-sm p-6">
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-8 h-8 rounded-sm border border-[#383532] flex items-center justify-center text-[#9aa8b6]"><i data-lucide="thermometer" class="w-4 h-4"></i></div>
+                <h3 class="text-sm font-black text-white uppercase tracking-wider">Cooling &amp; A/C</h3>
+              </div>
+              <ul class="space-y-2 text-sm text-[#b3ada6]">
+                <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0 text-[#8a8580]"></i>Radiator replacement</li>
+                <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0 text-[#8a8580]"></i>Cooling fan replacement</li>
+                <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0 text-[#8a8580]"></i>Water pump replacement</li>
+                <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0 text-[#8a8580]"></i>A/C compressor repair &amp; replacement</li>
+                <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0 text-[#8a8580]"></i>A/C leak diagnosis</li>
+              </ul>
+            </div>
+
+            <div class="border border-[#383532] rounded-sm p-6">
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-8 h-8 rounded-sm border border-[#383532] flex items-center justify-center text-[#9aa8b6]"><i data-lucide="zap" class="w-4 h-4"></i></div>
+                <h3 class="text-sm font-black text-white uppercase tracking-wider">Starting &amp; Electrical</h3>
+              </div>
+              <ul class="space-y-2 text-sm text-[#b3ada6]">
+                <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0 text-[#8a8580]"></i>Starter motor replacement</li>
+                <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0 text-[#8a8580]"></i>Alternator replacement</li>
+                <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0 text-[#8a8580]"></i>Battery replacement</li>
+                <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0 text-[#8a8580]"></i>Oxygen (O2) sensor replacement</li>
+              </ul>
+            </div>
+
+            <div class="border border-[#383532] rounded-sm p-6">
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-8 h-8 rounded-sm border border-[#383532] flex items-center justify-center text-[#9aa8b6]"><i data-lucide="disc" class="w-4 h-4"></i></div>
+                <h3 class="text-sm font-black text-white uppercase tracking-wider">Brakes</h3>
+              </div>
+              <ul class="space-y-2 text-sm text-[#b3ada6]">
+                <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0 text-[#8a8580]"></i>Ceramic brake pad replacement</li>
+                <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0 text-[#8a8580]"></i>Rotor replacement</li>
+                <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0 text-[#8a8580]"></i>Squeaking, grinding &amp; soft pedal diagnosis</li>
+              </ul>
+            </div>
+
+            <div class="border border-[#383532] rounded-sm p-6">
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-8 h-8 rounded-sm border border-[#383532] flex items-center justify-center text-[#9aa8b6]"><i data-lucide="car" class="w-4 h-4"></i></div>
+                <h3 class="text-sm font-black text-white uppercase tracking-wider">Suspension</h3>
+              </div>
+              <ul class="space-y-2 text-sm text-[#b3ada6]">
+                <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0 text-[#8a8580]"></i>Struts &amp; shocks</li>
+                <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0 text-[#8a8580]"></i>Control arms &amp; bushings</li>
+                <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0 text-[#8a8580]"></i>CV boots &amp; axles</li>
+              </ul>
+            </div>
+
+            <div class="border border-[#383532] rounded-sm p-6">
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-8 h-8 rounded-sm border border-[#383532] flex items-center justify-center text-[#9aa8b6]"><i data-lucide="droplet" class="w-4 h-4"></i></div>
+                <h3 class="text-sm font-black text-white uppercase tracking-wider">Maintenance</h3>
+              </div>
+              <ul class="space-y-2 text-sm text-[#b3ada6]">
+                <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0 text-[#8a8580]"></i>Full synthetic oil change</li>
+                <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0 text-[#8a8580]"></i>Filter replacement</li>
+                <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0 text-[#8a8580]"></i>Spark plug inspection</li>
+                <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0 text-[#8a8580]"></i>Rodent nest &amp; debris removal</li>
+              </ul>
+            </div>
+
+            <div class="border border-[#383532] bg-[#262422] rounded-sm p-6 flex flex-col justify-between">
+              <div>
+                <h3 class="text-sm font-black text-white uppercase tracking-wider mb-3">Don't See Your Repair?</h3>
+                <p class="text-sm text-[#b3ada6] leading-relaxed mb-5">Give Russell a call. If we can do it, we'll tell you. If we can't, we'll tell you that too.</p>
+              </div>
+              <a href="tel:7022411227" class="inline-flex items-center justify-center gap-2 px-5 py-3 bg-[#a4b3c2] hover:bg-[#92a2b2] text-[#141312] font-black text-xs uppercase tracking-widest rounded-sm transition">
+                <i data-lucide="phone" class="w-4 h-4"></i>
+                <span>(702) 241-1227</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- BOOKING FORM SECTION -->
+      <section id="servicesBookingSection" class="py-16 bg-[#262422]">
+        <div class="max-w-2xl mx-auto px-4 sm:px-6">
+          <div class="text-center mb-8">
+            <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight uppercase">Let’s Get Started Together</h2>
+          </div>
+
+          <div class="bg-transparent border border-[#383532] p-6 sm:p-10 rounded-sm">
+            <form id="servicesBookingForm" onsubmit="handleServicesBooking(event)" class="space-y-6">
+                <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" class="hidden">
+              
+              <div class="grid sm:grid-cols-2 gap-5">
+                <div>
+                  <label class="block text-[10px] font-bold uppercase tracking-widest text-[#8a8580] mb-2">First Name (required)</label>
+                  <input type="text" id="srvFirstName" required class="w-full px-4 py-3 bg-transparent border border-[#383532] text-white text-sm focus:outline-none focus:border-neutral-500 rounded-sm">
+                </div>
+                <div>
+                  <label class="block text-[10px] font-bold uppercase tracking-widest text-[#8a8580] mb-2">Last Name</label>
+                  <input type="text" id="srvLastName" class="w-full px-4 py-3 bg-transparent border border-[#383532] text-white text-sm focus:outline-none focus:border-neutral-500 rounded-sm">
+                </div>
+              </div>
+
+              <div class="grid sm:grid-cols-2 gap-5">
+                <div>
+                  <label class="block text-[10px] font-bold uppercase tracking-widest text-[#8a8580] mb-2">Email</label>
+                  <input type="email" id="srvEmail" class="w-full px-4 py-3 bg-transparent border border-[#383532] text-white text-sm focus:outline-none focus:border-neutral-500 rounded-sm">
+                </div>
+                <div>
+                  <label class="block text-[10px] font-bold uppercase tracking-widest text-[#8a8580] mb-2">Phone (required)</label>
+                  <input type="tel" id="srvPhone" required placeholder="Your phone number" class="w-full px-4 py-3 bg-transparent border border-[#383532] text-white text-sm focus:outline-none focus:border-neutral-500 rounded-sm placeholder:text-[#6a6560]">
+                </div>
+              </div>
+
+              <div>
+                <label for="srvAddress" class="block text-[10px] font-bold uppercase tracking-widest text-[#8a8580] mb-2">Service Address</label>
+                <input type="text" id="srvAddress" autocomplete="street-address" placeholder="Where is the vehicle? Street, city, ZIP" class="w-full px-4 py-3 bg-transparent border border-[#383532] text-white text-sm focus:outline-none focus:border-neutral-500 rounded-sm placeholder:text-[#6a6560]">
+              </div>
+
+              <div>
+                <label for="srvCategory" class="block text-[10px] font-bold uppercase tracking-widest text-[#8a8580] mb-2">What do you need help with? (required)</label>
+                <div class="relative">
+                  <select id="srvCategory" required class="w-full px-4 py-3 pr-10 bg-transparent border border-[#383532] text-white text-sm focus:outline-none focus:border-neutral-500 rounded-sm appearance-none cursor-pointer">
+                    <option value="" disabled selected class="bg-[#262422]">Choose a category</option>
+                    <option value="Diagnostics" class="bg-[#262422]">Diagnostics</option>
+                    <option value="Engine Repair" class="bg-[#262422]">Engine Repair</option>
+                    <option value="Cooling & A/C" class="bg-[#262422]">Cooling &amp; A/C</option>
+                    <option value="Starting & Electrical" class="bg-[#262422]">Starting &amp; Electrical</option>
+                    <option value="Brakes" class="bg-[#262422]">Brakes</option>
+                    <option value="Suspension" class="bg-[#262422]">Suspension</option>
+                    <option value="Maintenance" class="bg-[#262422]">Maintenance</option>
+                    <option value="Other / Not sure" class="bg-[#262422]">Other / Not sure</option>
+                  </select>
+                  <i data-lucide="chevron-down" class="w-4 h-4 text-[#8a8580] absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+                </div>
+              </div>
+
+              <label for="srvEmergency" class="flex items-start gap-3 p-4 border border-[#383532] hover:border-neutral-500 rounded-sm cursor-pointer transition">
+                <input type="checkbox" id="srvEmergency" class="accent-[#ef4444] w-4 h-4 mt-0.5 shrink-0">
+                <span>
+                  <span class="text-xs font-bold text-white uppercase tracking-wider block">This is an emergency</span>
+                  <span class="text-xs text-[#8a8580] block mt-1">Won't start, unsafe to drive, or you're stranded. For the fastest help, also call Russell at <a href="tel:7022411227" class="underline hover:text-white">(702) 241-1227</a>.</span>
+                </span>
+              </label>
+
+              <div>
+                <label for="srvStartDate" class="block text-[10px] font-bold uppercase tracking-widest text-[#8a8580] mb-2">
+                  Preferred Date <span class="text-neutral-500 normal-case tracking-normal">(optional, leave blank if you're flexible)</span>
+                </label>
+                <input type="date" id="srvStartDate" style="color-scheme: dark" class="w-full px-4 py-3 bg-transparent border border-[#383532] text-white text-sm focus:outline-none focus:border-neutral-500 rounded-sm">
+              </div>
+
+              <div>
+                <label for="srvDetails" class="block text-[10px] font-bold uppercase tracking-widest text-[#8a8580] mb-2">Details</label>
+                <textarea id="srvDetails" rows="4" placeholder="Year, make and model, what's going on, any warning lights or noises" class="w-full px-4 py-3 bg-transparent border border-[#383532] text-white text-sm focus:outline-none focus:border-neutral-500 rounded-sm placeholder:text-[#6a6560]"></textarea>
+              </div>
+
+              <button type="submit" class="w-full py-4 bg-[#a4b3c2] hover:bg-[#92a2b2] text-[#141312] font-black text-xs uppercase tracking-widest transition rounded-sm mt-4">
+                Submit
+              </button>
+            </form>
+
+            <div id="servicesBookingSuccess" class="hidden mt-6 p-4 bg-[#1e2420] border border-emerald-800 text-neutral-200 text-sm rounded-sm">
+              <span class="font-bold text-white block">Request Received!</span>
+              <p id="servicesSuccessDetails" class="text-neutral-300 mt-1 text-xs"></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- VIEW 3: ABOUT & CONTACT PAGE                             -->
+    <!-- ======================================================== -->
+    <section id="view-about-contact" class="view-section">
+      <div class="pt-12 pb-14 bg-[#211f1d] border-b border-[#302c29]">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <button onclick="switchView('home')" class="inline-flex items-center gap-2 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[#8a8580] hover:text-white transition mb-6">
+            <i data-lucide="chevron-left" class="w-4 h-4"></i>
+            <span>Back to Home</span>
+          </button>
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight uppercase custom-underline mb-6">
+            About & Contact
+          </h1>
+          <div class="mt-8 flex flex-wrap gap-4">
+            <a href="tel:7022411227" class="px-6 py-3 bg-[#a4b3c2] hover:bg-[#92a2b2] text-[#141312] font-black text-xs uppercase tracking-widest rounded-sm transition flex items-center gap-2">
+              <i data-lucide="phone" class="w-4 h-4"></i>
+              <span>Call Russell: (702) 241-1227</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <section class="py-16 border-b border-[#302c29]">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="grid lg:grid-cols-12 gap-12 items-center">
+            <div class="lg:col-span-7 space-y-5">
+              <span class="text-xs uppercase tracking-widest text-[#8a8580] font-semibold block">Nevada Born & Operated</span>
+              <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight uppercase">
+                People Over Profit.<br>Every Customer. Every Repair.
+              </h2>
+              <p class="text-[#b3ada6] text-sm sm:text-base leading-relaxed">
+                The automotive repair industry in Las Vegas has become increasingly focused on numbers: higher repair bills, aggressive upselling, and maximizing every customer ticket. Somewhere along the way, taking care of the customer can get lost. And that is truthfully what we strive for.
+              </p>
+              <p class="text-[#b3ada6] text-sm sm:text-base leading-relaxed">
+                <strong>Cowboy Mechanics LLC</strong> was built to do things differently. We believe a mechanic should earn your trust, not take advantage of it. That means honest diagnostics, straightforward recommendations, transparent pricing, and never selling you something your vehicle doesn't actually need.
+              </p>
+              <p class="text-[#b3ada6] text-sm sm:text-base leading-relaxed">
+                We're here to fix cars, solve problems, and take care of people not squeeze every possible dollar out of a repair. No unnecessary repairs. No pressure. No games.
+              </p>
+            </div>
+            <div class="lg:col-span-5">
+              <div class="relative border border-[#383532] p-2 overflow-hidden rounded-sm">
+                <img src="images/about-russell.jpg"
+                     alt="Russell working under the hood of a truck"
+                     class="w-full h-80 object-cover object-top rounded-sm"/>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-16 bg-[#262422]">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="grid lg:grid-cols-12 gap-10 items-start">
+            <div class="lg:col-span-5 space-y-5">
+              <div>
+                <span class="text-[10px] sm:text-xs uppercase tracking-widest text-[#8a8580] font-semibold block mb-2">Direct Contact</span>
+                <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight uppercase mb-2">Reach Out To Dispatch</h2>
+              </div>
+              <a href="tel:7022411227" class="p-4 border border-[#383532] flex items-center gap-4 group block transition hover:border-neutral-500 rounded-sm">
+                <div class="w-10 h-10 border border-neutral-700 flex items-center justify-center text-[#9aa8b6] group-hover:text-white transition rounded-sm">
+                  <i data-lucide="phone-call" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <span class="text-[10px] uppercase font-bold tracking-wider text-[#8a8580] block">Contact Russell</span>
+                  <span class="text-base font-extrabold text-white block">(702) 241-1227</span>
+                </div>
+              </a>
+              <div class="p-4 border border-[#383532] flex items-center gap-4 rounded-sm">
+                <div class="w-10 h-10 border border-neutral-700 flex items-center justify-center text-[#9aa8b6] rounded-sm">
+                  <i data-lucide="mail" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <span class="text-[10px] uppercase font-bold tracking-wider text-[#8a8580] block">Email</span>
+                  <span class="text-sm font-bold text-white block">admincowboymechanics@gmail.com</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="lg:col-span-7 bg-transparent border border-[#383532] p-6 sm:p-8 rounded-sm">
+              <h3 class="text-lg font-black text-white uppercase tracking-tight mb-2">Send Us A Message</h3>
+              <form id="contactPageForm" onsubmit="handleContactPageSubmit(event)" class="space-y-6 mt-6">
+                <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" class="hidden">
+              
+              <div class="grid sm:grid-cols-2 gap-5">
+                <div>
+                  <label class="block text-[10px] font-bold uppercase tracking-widest text-[#8a8580] mb-2">First Name (required)</label>
+                  <input type="text" id="cntFirstName" required class="w-full px-4 py-3 bg-transparent border border-[#383532] text-white text-sm focus:outline-none focus:border-neutral-500 rounded-sm">
+                </div>
+                <div>
+                  <label class="block text-[10px] font-bold uppercase tracking-widest text-[#8a8580] mb-2">Last Name</label>
+                  <input type="text" id="cntLastName" class="w-full px-4 py-3 bg-transparent border border-[#383532] text-white text-sm focus:outline-none focus:border-neutral-500 rounded-sm">
+                </div>
+              </div>
+
+              <div class="grid sm:grid-cols-2 gap-5">
+                <div>
+                  <label class="block text-[10px] font-bold uppercase tracking-widest text-[#8a8580] mb-2">Email</label>
+                  <input type="email" id="cntEmail" class="w-full px-4 py-3 bg-transparent border border-[#383532] text-white text-sm focus:outline-none focus:border-neutral-500 rounded-sm">
+                </div>
+                <div>
+                  <label class="block text-[10px] font-bold uppercase tracking-widest text-[#8a8580] mb-2">Phone (required)</label>
+                  <input type="tel" id="cntPhone" required placeholder="Your phone number" class="w-full px-4 py-3 bg-transparent border border-[#383532] text-white text-sm focus:outline-none focus:border-neutral-500 rounded-sm placeholder:text-[#6a6560]">
+                </div>
+              </div>
+
+              <div>
+                <label for="cntAddress" class="block text-[10px] font-bold uppercase tracking-widest text-[#8a8580] mb-2">Service Address</label>
+                <input type="text" id="cntAddress" autocomplete="street-address" placeholder="Where is the vehicle? Street, city, ZIP" class="w-full px-4 py-3 bg-transparent border border-[#383532] text-white text-sm focus:outline-none focus:border-neutral-500 rounded-sm placeholder:text-[#6a6560]">
+              </div>
+
+              <div>
+                <label for="cntCategory" class="block text-[10px] font-bold uppercase tracking-widest text-[#8a8580] mb-2">What do you need help with? (required)</label>
+                <div class="relative">
+                  <select id="cntCategory" required class="w-full px-4 py-3 pr-10 bg-transparent border border-[#383532] text-white text-sm focus:outline-none focus:border-neutral-500 rounded-sm appearance-none cursor-pointer">
+                    <option value="" disabled selected class="bg-[#262422]">Choose a category</option>
+                    <option value="Diagnostics" class="bg-[#262422]">Diagnostics</option>
+                    <option value="Engine Repair" class="bg-[#262422]">Engine Repair</option>
+                    <option value="Cooling & A/C" class="bg-[#262422]">Cooling &amp; A/C</option>
+                    <option value="Starting & Electrical" class="bg-[#262422]">Starting &amp; Electrical</option>
+                    <option value="Brakes" class="bg-[#262422]">Brakes</option>
+                    <option value="Suspension" class="bg-[#262422]">Suspension</option>
+                    <option value="Maintenance" class="bg-[#262422]">Maintenance</option>
+                    <option value="Other / Not sure" class="bg-[#262422]">Other / Not sure</option>
+                  </select>
+                  <i data-lucide="chevron-down" class="w-4 h-4 text-[#8a8580] absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+                </div>
+              </div>
+
+              <label for="cntEmergency" class="flex items-start gap-3 p-4 border border-[#383532] hover:border-neutral-500 rounded-sm cursor-pointer transition">
+                <input type="checkbox" id="cntEmergency" class="accent-[#ef4444] w-4 h-4 mt-0.5 shrink-0">
+                <span>
+                  <span class="text-xs font-bold text-white uppercase tracking-wider block">This is an emergency</span>
+                  <span class="text-xs text-[#8a8580] block mt-1">Won't start, unsafe to drive, or you're stranded. For the fastest help, also call Russell at <a href="tel:7022411227" class="underline hover:text-white">(702) 241-1227</a>.</span>
+                </span>
+              </label>
+
+              <div>
+                <label for="cntStartDate" class="block text-[10px] font-bold uppercase tracking-widest text-[#8a8580] mb-2">
+                  Preferred Date <span class="text-neutral-500 normal-case tracking-normal">(optional, leave blank if you're flexible)</span>
+                </label>
+                <input type="date" id="cntStartDate" style="color-scheme: dark" class="w-full px-4 py-3 bg-transparent border border-[#383532] text-white text-sm focus:outline-none focus:border-neutral-500 rounded-sm">
+              </div>
+
+              <div>
+                <label for="cntDetails" class="block text-[10px] font-bold uppercase tracking-widest text-[#8a8580] mb-2">Details</label>
+                <textarea id="cntDetails" rows="4" placeholder="Year, make and model, what's going on, any warning lights or noises" class="w-full px-4 py-3 bg-transparent border border-[#383532] text-white text-sm focus:outline-none focus:border-neutral-500 rounded-sm placeholder:text-[#6a6560]"></textarea>
+              </div>
+
+              <button type="submit" class="w-full py-4 bg-[#a4b3c2] hover:bg-[#92a2b2] text-[#141312] font-black text-xs uppercase tracking-widest transition rounded-sm mt-4">
+                Submit Request
+              </button>
+            </form>
+              <div id="contactPageSuccess" class="hidden mt-4 p-4 bg-[#1e2420] border border-emerald-800 text-neutral-200 text-sm rounded-sm">
+                <span class="font-bold text-white block">Message Sent!</span>
+                <p id="contactSuccessDetails" class="text-neutral-300 mt-1 text-xs"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- VIEW 4: GALLERY PAGE                                     -->
+    <!-- ======================================================== -->
+    <section id="view-gallery" class="view-section">
+      <div class="pt-12 pb-14 bg-[#211f1d] border-b border-[#302c29]">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <button onclick="switchView('home')" class="inline-flex items-center gap-2 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[#8a8580] hover:text-white transition mb-6">
+            <i data-lucide="chevron-left" class="w-4 h-4"></i>
+            <span>Back to Home</span>
+          </button>
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight uppercase custom-underline mb-6">
+            Our Work
+          </h1>
+          <p class="text-sm sm:text-base text-[#9c968f] max-w-2xl mt-4 leading-relaxed">
+            Real jobs, start to finish. Click any project to see every step.
+          </p>
+        </div>
+      </div>
+
+      <section class="py-12 sm:py-16 bg-[#262422]">
+        <div id="galleryList" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 divide-y divide-[#383532] border-y border-[#383532]">
+          <!-- Project rows are rendered from galleryProjects in the script below -->
+        </div>
+      </section>
+    </section>
+
+  </main>
+
+  <!-- GALLERY PROJECT POP-UP -->
+  <div id="projectModal" class="fixed inset-0 z-[60] hidden" role="dialog" aria-modal="true" aria-labelledby="projectModalTitle">
+    <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeProject()"></div>
+    <div class="relative h-full overflow-y-auto" onclick="if (event.target === this) closeProject()">
+      <div class="relative max-w-5xl mx-auto my-0 sm:my-10 bg-[#211f1d] border border-[#383532] sm:rounded-sm min-h-full sm:min-h-0">
+        <div class="sticky top-0 z-10 flex items-start justify-between gap-4 bg-[#211f1d] border-b border-[#302c29] px-5 sm:px-8 py-5">
+          <div>
+            <span id="projectModalTag" class="text-[10px] sm:text-xs uppercase tracking-widest text-[#8a8580] font-bold block mb-1"></span>
+            <h2 id="projectModalTitle" class="text-xl sm:text-2xl font-black text-white tracking-tight uppercase"></h2>
+          </div>
+          <button onclick="closeProject()" class="p-2 -mr-2 text-[#b3ada6] hover:text-white transition" aria-label="Close">
+            <i data-lucide="x" class="w-6 h-6"></i>
+          </button>
+        </div>
+        <div class="px-5 sm:px-8 py-6">
+          <p id="projectModalDesc" class="text-sm sm:text-base text-[#b3ada6] leading-relaxed max-w-2xl mb-6"></p>
+          <div id="projectBeforeAfter" class="mb-8">
+            <span class="text-xs uppercase tracking-widest text-[#8a8580] font-bold block mb-3">Before &amp; After</span>
+            <div id="projectBeforeAfterGrid" class="grid grid-cols-2 gap-2 sm:gap-4"></div>
+          </div>
+          <span class="text-xs uppercase tracking-widest text-[#8a8580] font-bold block mb-3">All Photos</span>
+          <div id="projectModalGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FULL-SIZE PHOTO VIEWER (inside a project) -->
+  <div id="photoViewer" class="fixed inset-0 z-[70] hidden bg-black/95 flex items-center justify-center select-none">
+    <button onclick="closePhoto()" class="absolute top-4 right-4 p-2 text-[#b3ada6] hover:text-white transition" aria-label="Close photo">
+      <i data-lucide="x" class="w-7 h-7"></i>
+    </button>
+    <button onclick="stepPhoto(-1)" class="absolute left-2 sm:left-6 p-3 text-[#b3ada6] hover:text-white transition" aria-label="Previous photo">
+      <i data-lucide="chevron-left" class="w-8 h-8"></i>
+    </button>
+    <img id="photoViewerImg" src="" alt="" class="max-h-[85vh] max-w-[88vw] object-contain rounded-sm">
+    <button onclick="stepPhoto(1)" class="absolute right-2 sm:right-6 p-3 text-[#b3ada6] hover:text-white transition" aria-label="Next photo">
+      <i data-lucide="chevron-right" class="w-8 h-8"></i>
+    </button>
+    <span id="photoViewerCount" class="absolute bottom-5 left-1/2 -translate-x-1/2 text-xs font-bold uppercase tracking-widest text-[#8a8580]"></span>
+  </div>
+
+  <!-- NEWSLETTER SIGNUP SECTION -->
+  <section class="bg-[#211f1d] border-t border-[#302c29] py-16">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6 text-center">
+      <img src="logo-mark.png" alt="" class="h-16 w-auto mx-auto mb-5 opacity-90">
+      <h3 class="text-2xl sm:text-3xl font-black text-white uppercase tracking-wider mb-3">PEOPLE OVER PROFIT</h3>
+      <p class="text-sm text-[#9c968f] mb-6">Sign up with your email address to receive news and updates.</p>
+      <form id="newsletterForm" onsubmit="handleNewsletterSubmit(event)" class="flex flex-col sm:flex-row items-center justify-center gap-3 max-w-md mx-auto">
+        <input type="email" id="nlEmail" required placeholder="Email Address" class="w-full px-4 py-3 bg-transparent border border-[#383532] text-white text-sm focus:outline-none focus:border-neutral-500 rounded-sm">
+        <button type="submit" class="w-full sm:w-auto px-8 py-3 bg-[#a4b3c2] hover:bg-[#92a2b2] text-[#141312] font-black text-xs uppercase tracking-widest whitespace-nowrap transition rounded-sm">
+          Sign Up
+        </button>
+      </form>
+      <div id="newsletterSuccess" class="hidden mt-4 text-xs text-emerald-400 font-semibold">
+        Thank you for subscribing!
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-[#141312] border-t border-[#302c29] py-12 text-xs text-[#7a7570]">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-8 border-b border-[#302c29]">
+        <div class="flex items-center gap-3">
+          <img src="logo-mark.png" alt="" class="h-9 w-auto">
+          <div>
+            <span class="font-black text-sm tracking-wider text-white uppercase block leading-none">COWBOY MECHANICS</span>
+          </div>
+        </div>
+        <div class="flex flex-wrap items-center gap-6 font-bold uppercase tracking-wider text-[#9c968f] text-[10px] sm:text-xs">
+          <button onclick="switchView('about-contact')" class="hover:text-white transition">About</button>
+          <button onclick="switchView('gallery')" class="hover:text-white transition">Gallery</button>
+          <button onclick="switchView('about-contact'); scrollToEstimate();" class="hover:text-white transition">Contact</button>
+          <a href="tel:7022411227" class="text-white hover:underline transition">Russell: (702) 241-1227</a>
+        </div>
+      </div>
+      <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] sm:text-xs text-[#6a6560]">
+        <p>© 2026 Cowboy Mechanics LLC · Las Vegas, NV</p>
+        <p>24/7 On-Demand Mobile Auto Repair</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => { lucide.createIcons(); });
+
+    // Hero background image fallbacks
+    const heroFallbacks = [
+      'filler.webp',
+      'pics/background_home.jpg',
+      'background_home.jpg',
+      'pics/background_home.jpeg',
+      'pics/background_home.png',
+      'filler_3.jpg',
+      'filler.jpg',
+      'https://images.unsplash.com/photo-1549488344-cbb6c34cf08b?auto=format&fit=crop&w=1600&q=80'
+    ];
+    let heroFallbackIndex = 0;
+    function tryNextHeroImage(img) {
+      if (heroFallbackIndex < heroFallbacks.length) {
+        img.src = heroFallbacks[heroFallbackIndex++];
+      }
+    }
+
+    // Certificate image fallbacks matching your original certificate
+    const certFallbacks = [
+      'peopleoverprofit_cert.png',
+      'Certificate.jpg',
+      'pics/Certificate.jpg',
+      'Certificate.jpeg',
+      'pics/Certificate.jpeg',
+      'Certificate.png',
+      'pics/Certificate.png',
+      '“PEOPLE OVER PROFIT”.jpg'
+    ];
+    let certFallbackIndex = 0;
+    function tryNextCertImage(img) {
+      if (certFallbackIndex < certFallbacks.length) {
+        img.src = certFallbacks[certFallbackIndex++];
+      } else {
+        // Fallback to the authentic high-fidelity original parchment rendering
+        img.classList.add('hidden');
+        const fallback = document.getElementById('certOriginalFallback');
+        if (fallback) fallback.classList.remove('hidden');
+      }
+    }
+
+    function switchView(viewName) {
+      const views = document.querySelectorAll('.view-section');
+      views.forEach(v => v.classList.remove('active'));
+      const target = document.getElementById(`view-${viewName}`);
+      if (target) target.classList.add('active');
+
+      const navButtons = document.querySelectorAll('.nav-item');
+      navButtons.forEach(btn => {
+        btn.classList.remove('text-white');
+        btn.classList.add('text-[#b3ada6]');
+      });
+      const currentNav = document.getElementById(`nav-${viewName}`);
+      if (currentNav) {
+        currentNav.classList.remove('text-[#b3ada6]');
+        currentNav.classList.add('text-white');
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setTimeout(() => { lucide.createIcons(); }, 50);
+    }
+
+    const mobileDrawer = document.getElementById('mobileDrawer');
+    function toggleMobile() { mobileDrawer.classList.toggle('hidden'); }
+    if (document.getElementById('mobileToggle')) {
+      document.getElementById('mobileToggle').addEventListener('click', toggleMobile);
+    }
+
+    function scrollToEstimate() {
+      setTimeout(() => {
+        const estSec = document.getElementById('estimate-section') || document.getElementById('contactPageForm');
+        if (estSec) estSec.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
+
+    function prefillBooking(category) {
+      switchView('services');
+      setTimeout(() => {
+        document.getElementById('srvCategory').value = category;
+        document.getElementById('servicesBookingSection').scrollIntoView({ behavior: 'smooth' });
+      }, 150);
+    }
+
+    // ---------------- FORM DELIVERY ----------------
+    // Submissions are emailed to this address through FormSubmit (formsubmit.co).
+    // The very first submission sends an "Activate" email to this inbox; click it once to turn delivery on.
+    const FORM_EMAIL = 'admincowboymechanics@gmail.com';
+    const val = id => document.getElementById(id).value.trim();
+
+    async function sendForm(form, subject, fields, replyTo) {
+      const button = form.querySelector('button[type="submit"]');
+      const label = button.textContent;
+      button.disabled = true;
+      button.textContent = 'Sending...';
+      let errorBox = form.parentElement.querySelector('.form-error');
+      if (errorBox) errorBox.remove();
+      try {
+        const res = await fetch(`https://formsubmit.co/ajax/${FORM_EMAIL}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({ _subject: subject, _template: 'table', ...(replyTo ? { _replyto: replyTo } : {}), ...fields })
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || String(data.success) === 'false') throw new Error(data.message || 'Send failed');
+        form.reset();
+        return true;
+      } catch (err) {
+        errorBox = document.createElement('div');
+        errorBox.className = 'form-error mt-4 p-4 bg-[#2a1d1d] border border-red-900 text-neutral-200 text-sm rounded-sm';
+        errorBox.innerHTML = '<span class="font-bold text-white block">Your message didn\'t go through.</span><span class="text-xs text-neutral-300">Please try again, or call Russell at <a href="tel:7022411227" class="underline">(702) 241-1227</a>.</span>';
+        form.after(errorBox);
+        return false;
+      } finally {
+        button.disabled = false;
+        button.textContent = label;
+      }
+    }
+
+    // Service request form: same fields on the home page (prefix "est") and Services page (prefix "srv")
+    async function submitServiceRequest(e, prefix, where, successBoxId, successMsgId) {
+      e.preventDefault();
+      if (e.target.querySelector('[name="_honey"]').value) return;
+      const f = name => val(prefix + name);
+      const emergency = document.getElementById(prefix + 'Emergency').checked;
+      const ok = await sendForm(e.target, `${emergency ? 'EMERGENCY - ' : ''}New service request - Cowboy Mechanics`, {
+        'Form': where,
+        'Emergency': emergency ? 'YES' : 'No',
+        'Name': `${f('FirstName')} ${f('LastName')}`.trim(),
+        'Email': f('Email'),
+        'Phone': f('Phone'),
+        'Service address': f('Address'),
+        'Category': f('Category'),
+        'Preferred date': f('StartDate') || 'Flexible',
+        'Details': f('Details')
+      }, f('Email'));
+      if (!ok) return;
+      document.getElementById(successMsgId).textContent = emergency
+        ? 'Emergency request sent. For the fastest response, also call Russell at (702) 241-1227.'
+        : 'Request sent. We will reach out shortly.';
+      document.getElementById(successBoxId).classList.remove('hidden');
+    }
+
+    const handleEstimateSubmit = e => submitServiceRequest(e, 'est', 'Get An Estimate (home page)', 'estimateSuccess', 'estimateMessage');
+    const handleServicesBooking = e => submitServiceRequest(e, 'srv', "Let's Get Started Together (Services page)", 'servicesBookingSuccess', 'servicesSuccessDetails');
+
+    const handleContactPageSubmit = e => submitServiceRequest(e, 'cnt', 'Send Us A Message (Contact page)', 'contactPageSuccess', 'contactSuccessDetails');
+
+    function handleNewsletterSubmit(e) {
+      e.preventDefault();
+      document.getElementById('newsletterSuccess').classList.remove('hidden');
+      document.getElementById('newsletterForm').reset();
+    }
+
+    // ---------------- GALLERY ----------------
+    // To add a project: put photos in gallery/<folder>/ (01.jpg, 02.jpg, ...) with
+    // smaller copies in gallery/<folder>/thumbs/, then add an entry below.
+    const galleryProjects = [
+      {
+        folder: 'sprinter', count: 36, cover: 7, before: 6, after: 36,
+        tag: '2004 Freightliner Sprinter',
+        title: 'Cracked Pistons',
+        desc: 'Diagnosing and repairing cracked pistons on a 2004 Freightliner Sprinter. Full teardown, documented step by step.'
+      },
+      {
+        folder: 'jeep', count: 25, cover: 7, before: 3, after: 25,
+        tag: '2015 Jeep Grand Cherokee',
+        title: 'Timing & Head Gaskets',
+        desc: 'Timing job and head gasket replacement on a 2015 Jeep Grand Cherokee.'
+      },
+      {
+        folder: 'g37', count: 5, cover: 4, before: 5, after: 3,
+        tag: '2010 Infiniti G37',
+        title: 'Timing Job',
+        desc: 'Timing service on a 2010 Infiniti G37.'
+      },
+      {
+        folder: 'v6-timing', count: 6, cover: 6,
+        tag: 'V6 Engine',
+        title: 'Timing & Valve Cover Gasket',
+        desc: 'Timing chain work and valve cover gasket replacement on a V6.'
+      },
+      {
+        folder: 'radiator-fans', count: 10, cover: 10, before: 6, after: 10,
+        tag: 'Cooling System',
+        title: 'Radiator & Cooling Fans',
+        desc: 'Damaged radiator swapped out for a new radiator with electric cooling fans.'
+      },
+      {
+        folder: 'chevy-lift', count: 4, cover: 3,
+        tag: 'Chevy Truck',
+        title: 'Undercarriage Work',
+        desc: 'Chevy truck up on a lift for undercarriage work.'
+      },
+      {
+        folder: 'bushings-o2', count: 10, cover: 5,
+        tag: 'Suspension & Sensors',
+        title: 'Bushings & O2 Sensors',
+        desc: 'Worn bushings and a torn CV boot found during inspection; old oxygen sensors replaced.'
+      },
+      {
+        folder: 'head-lifters', count: 5, cover: 1,
+        tag: 'Engine Repair',
+        title: 'Cylinder Head & Lifters',
+        desc: 'Cylinder head off with the lifters and valvetrain inspected.'
+      },
+      {
+        folder: 'passat', count: 6, cover: 1,
+        tag: 'Volkswagen Passat',
+        title: 'Service Call',
+        desc: 'On-site service call for a Volkswagen Passat.'
+      },
+      {
+        folder: 'valve-cover-chain', count: 9, cover: 6,
+        tag: 'Engine Repair',
+        title: 'Valve Cover & Timing Chain',
+        desc: 'Valve cover off to check sludge, camshafts and the timing chain.'
+      },
+      {
+        folder: 'engine-block', count: 4, cover: 4,
+        tag: 'Engine Repair',
+        title: 'Engine Block & Cylinder Head',
+        desc: 'Cylinder head off and the engine block inspected.'
+      },
+      {
+        folder: 'rodent-nest', count: 19, cover: 15,
+        tag: 'Chevy Truck',
+        title: 'Rodent Nest Cleanup',
+        desc: 'Rodent nest and debris cleared out of the frame, skid plate and radiator.'
+      },
+      {
+        folder: 'valve-springs', count: 4, cover: 4,
+        tag: 'V8 Engine',
+        title: 'Valve Springs',
+        desc: 'Checking valve springs and rocker arms on a V8.'
+      },
+      {
+        folder: 'alternator', count: 2, cover: 2,
+        tag: 'Charging System',
+        title: 'Alternator Work',
+        desc: 'Alternator and accessory drive area on a V6.'
+      },
+      {
+        folder: 'ac-compressor', count: 2, cover: 1,
+        tag: 'A/C',
+        title: 'A/C Compressor Check',
+        desc: 'Checking an A/C compressor and its pulley.'
+      },
+      {
+        folder: 'brakes', count: 7, cover: 2, before: 1, after: 5,
+        tag: 'Brake Job',
+        title: 'Brake Pads & Rotors',
+        desc: 'Worn-out pads and rusted rotors replaced.'
+      },
+      {
+        folder: 'nissan-vq', count: 19, cover: 4,
+        tag: 'Nissan / Infiniti V6',
+        title: 'Timing Chain Job',
+        desc: 'Timing cover off and timing chain work on a Nissan VQ V6.'
+      },
+      {
+        folder: 'intake-manifold', count: 4, cover: 3, before: 4, after: 3,
+        tag: 'V8 Truck',
+        title: 'Intake Manifold',
+        desc: 'Intake manifold removed and reinstalled on a V8 truck.'
+      }
+    ];
+
+    const photoPath = (p, n, thumb) => `gallery/${p.folder}/${thumb ? 'thumbs/' : ''}${String(n).padStart(2, '0')}.jpg`;
+
+    function renderGallery() {
+      const list = document.getElementById('galleryList');
+      list.innerHTML = galleryProjects.map((p, i) => {
+        const flip = i % 2 === 1;
+        return `
+          <article class="grid md:grid-cols-2 gap-6 md:gap-12 items-center py-10 sm:py-14">
+            <button onclick="openProject(${i})" class="group relative block overflow-hidden rounded-sm border border-[#383532] ${flip ? 'md:order-2' : ''}" aria-label="View ${p.title} project">
+              <img src="${photoPath(p, p.cover)}" alt="${p.tag} – ${p.title}" loading="lazy"
+                   class="w-full aspect-[4/3] object-cover filter grayscale-[15%] group-hover:grayscale-0 group-hover:scale-[1.03] transition duration-500">
+              <span class="absolute bottom-3 left-3 inline-flex items-center gap-2 px-3 py-1.5 bg-[#141312]/85 border border-[#383532] text-[10px] font-bold uppercase tracking-widest text-white">
+                <i data-lucide="images" class="w-3.5 h-3.5 text-[#a4b3c2]"></i>${p.count} Photos
+              </span>
+            </button>
+            <div class="${flip ? 'md:order-1' : ''}">
+              <span class="text-xs uppercase tracking-widest text-[#8a8580] font-bold block mb-2">${p.tag}</span>
+              <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight uppercase mb-4">${p.title}</h2>
+              <p class="text-sm sm:text-base text-[#b3ada6] leading-relaxed mb-6">${p.desc}</p>
+              <button onclick="openProject(${i})" class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#a4b3c2] hover:text-white transition">
+                <span>View Project</span>
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </article>`;
+      }).join('');
+    }
+
+    let currentProject = null;
+    let currentPhoto = 1;
+
+    function openProject(i) {
+      const p = galleryProjects[i];
+      currentProject = p;
+      document.getElementById('projectModalTag').textContent = p.tag;
+      document.getElementById('projectModalTitle').textContent = p.title;
+      document.getElementById('projectModalDesc').textContent = p.desc;
+      const ba = document.getElementById('projectBeforeAfter');
+      ba.classList.toggle('hidden', !(p.before && p.after));
+      if (p.before && p.after) {
+        document.getElementById('projectBeforeAfterGrid').innerHTML = [['Before', p.before], ['After', p.after]].map(([label, n]) => `
+          <button onclick="openPhoto(${n})" class="group relative block overflow-hidden rounded-sm border border-[#383532] hover:border-neutral-500 transition">
+            <img src="${photoPath(p, n)}" alt="${p.title} – ${label.toLowerCase()}" class="w-full aspect-[4/3] object-cover group-hover:scale-[1.03] transition duration-500">
+            <span class="absolute top-2 left-2 px-2.5 py-1 text-[10px] font-black uppercase tracking-widest ${label === 'After' ? 'bg-[#a4b3c2] text-[#141312]' : 'bg-[#141312]/90 text-white border border-[#383532]'}">${label}</span>
+          </button>`).join('');
+      }
+      const grid = document.getElementById('projectModalGrid');
+      grid.innerHTML = Array.from({ length: p.count }, (_, k) => `
+        <button onclick="openPhoto(${k + 1})" class="block overflow-hidden rounded-sm border border-[#302c29] hover:border-neutral-500 transition">
+          <img src="${photoPath(p, k + 1, true)}" alt="${p.title} – photo ${k + 1}" loading="lazy" class="w-full aspect-square object-cover hover:scale-105 transition duration-300">
+        </button>`).join('');
+      const modal = document.getElementById('projectModal');
+      modal.classList.remove('hidden');
+      modal.querySelector('.overflow-y-auto').scrollTop = 0;
+      document.body.style.overflow = 'hidden';
+      lucide.createIcons();
+    }
+
+    function closeProject() {
+      document.getElementById('projectModal').classList.add('hidden');
+      document.body.style.overflow = '';
+      currentProject = null;
+    }
+
+    function openPhoto(n) {
+      currentPhoto = n;
+      showPhoto();
+      document.getElementById('photoViewer').classList.remove('hidden');
+    }
+
+    function showPhoto() {
+      const img = document.getElementById('photoViewerImg');
+      img.src = photoPath(currentProject, currentPhoto);
+      img.alt = `${currentProject.title} – photo ${currentPhoto}`;
+      document.getElementById('photoViewerCount').textContent = `${currentPhoto} / ${currentProject.count}`;
+    }
+
+    function stepPhoto(dir) {
+      const n = currentProject.count;
+      currentPhoto = ((currentPhoto - 1 + dir + n) % n) + 1;
+      showPhoto();
+    }
+
+    function closePhoto() {
+      document.getElementById('photoViewer').classList.add('hidden');
+    }
+
+    // Click the dark area around a full-size photo to close it
+    document.getElementById('photoViewer').addEventListener('click', e => {
+      if (e.target.id === 'photoViewer') closePhoto();
+    });
+
+    // Keyboard: Esc closes, arrows flip through photos
+    document.addEventListener('keydown', e => {
+      const viewerOpen = !document.getElementById('photoViewer').classList.contains('hidden');
+      if (viewerOpen) {
+        if (e.key === 'Escape') closePhoto();
+        if (e.key === 'ArrowLeft') stepPhoto(-1);
+        if (e.key === 'ArrowRight') stepPhoto(1);
+      } else if (currentProject && e.key === 'Escape') {
+        closeProject();
+      }
+    });
+
+    // Swipe left/right on phones
+    let touchStartX = null;
+    document.getElementById('photoViewer').addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    document.getElementById('photoViewer').addEventListener('touchend', e => {
+      if (touchStartX === null) return;
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 40) stepPhoto(dx < 0 ? 1 : -1);
+      touchStartX = null;
+    });
+
+    renderGallery();
+  </script>
+</body>
+</html>
